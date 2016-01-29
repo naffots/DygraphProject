@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Moisture in palm tree</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript"
+      src="lib/dygraph-combined-dev.js"></script>
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h2>The plant experiment</h2>
+      <div class="well">
+        <div id="graphdiv2"
+          style="width:800px; height:500px;"></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      g2 = new Dygraph(
+        document.getElementById("graphdiv2"),
+        "report.txt", // path to CSV file
+        {
+          delimiter: ";",
+          labels: [ "Date", "Humidity"],
+          xValueParser: function(x) {
+            var dateparts = x.split(' ');
+            var parts = dateparts[0].split('-');
+            var hourparts = dateparts[1].split('.');
+            var timeparts = hourparts[0].split(':');
+            var newDate = new Date(parts[0],parts[1]-1,parts[2],timeparts[0],timeparts[1],timeparts[2]);
+            return newDate.getTime();
+          },
+          axes: {
+            x: {
+              valueFormatter: Dygraph.dateString_,
+              ticker: Dygraph.dateTicker
+            }
+          }
+        }
+      );
+    </script>
+  </body>
+</html>
