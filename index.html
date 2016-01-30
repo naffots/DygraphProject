@@ -14,15 +14,42 @@
     <div class="container">
       <h2>The plant experiment</h2>
       <div class="well">
+        <div id="graphdiv1"
+          style="width:800px; height:500px;"></div>
+      </div>
+      <div class="well">
         <div id="graphdiv2"
           style="width:800px; height:500px;"></div>
       </div>
     </div>
 
     <script type="text/javascript">
+      g1 = new Dygraph(
+        document.getElementById("graphdiv1"),
+        "temp.csv", // path to CSV file
+        {
+          delimiter: ";",
+          labels: [ "Date", "Temp"],
+          xValueParser: function(x) {
+            var dateparts = x.split(' ');
+            var parts = dateparts[0].split('-');
+            var hourparts = dateparts[1].split('.');
+            var timeparts = hourparts[0].split(':');
+            var newDate = new Date(parts[0],parts[1]-1,parts[2],timeparts[0],timeparts[1],timeparts[2]);
+            return newDate.getTime();
+          },
+          axes: {
+            x: {
+              valueFormatter: Dygraph.dateString_,
+              ticker: Dygraph.dateTicker
+            }
+          }
+        }
+      );
+
       g2 = new Dygraph(
         document.getElementById("graphdiv2"),
-        "report.txt", // path to CSV file
+        "moisture.csv", // path to CSV file
         {
           delimiter: ";",
           labels: [ "Date", "Humidity"],
@@ -42,6 +69,6 @@
           }
         }
       );
-    </script>
+</script>
   </body>
 </html>
