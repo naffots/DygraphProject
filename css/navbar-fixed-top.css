@@ -1,0 +1,11 @@
+body {
+  min-height: 2000px;
+  padding-top: 70px;
+}
+
+.chart {
+  width:80%;
+  height:500px;
+  margin-left: auto;
+  margin-right: auto;
+}
