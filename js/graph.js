@@ -4,7 +4,7 @@ function dateToTimestamp(x) {
       var hourparts = dateparts[1].split('.');
       var timeparts = hourparts[0].split(':');
       var newDate = new Date(parts[0],parts[1]-1,parts[2],timeparts[0],timeparts[1],timeparts[2]);
-      return newDate.getTime();
+      return newDate.getTime() + 3600000;
 };
 
 g1 = new Dygraph(
