@@ -7,21 +7,26 @@ function dateToTimestamp(x) {
       return newDate.getTime();
 };
 
+function formatDate(d) {
+        var yyyy = d.getFullYear(),
+            mm = d.getMonth() + 1,
+            dd = d.getDate();
+        return yyyy + '-' + (mm < 10 ? '0' : '') + mm + (dd < 10 ? '0' : '') + dd;
+};
+
 g1 = new Dygraph(
   document.getElementById("graphdiv1"),
   "temp.php", // path to CSV file
   {
     delimiter: ";",
     labels: [ "Date", "Temp"],
-    ylabel: "&deg;C",
     xValueParser: dateToTimestamp,
-    legend: {
-      valueFormatter: Dygraph-datestring_
-    }
+    ylabel: "&deg;C",
     axes: {
       x: {
-        valueFormatter: Dygraph.dateString_,
-        ticker: Dygraph.dateTicker
+        valueFormatter: function(ms) {
+          return Dygraph.dateString_(ms, false);
+        }
       }
     }
   }
@@ -37,8 +42,9 @@ g2 = new Dygraph(
     ylabel: "Volt",
     axes: {
       x: {
-        valueFormatter: Dygraph.dateString_,
-        ticker: Dygraph.dateTicker
+        valueFormatter: function(ms) {
+          return Dygraph.dateString_(ms, false);
+        }
       }
     }
   }
