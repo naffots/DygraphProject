@@ -15,6 +15,9 @@ g1 = new Dygraph(
     labels: [ "Date", "Temp"],
     ylabel: "&deg;C",
     xValueParser: dateToTimestamp,
+    legend: {
+      valueFormatter: Dygraph-datestring_
+    }
     axes: {
       x: {
         valueFormatter: Dygraph.dateString_,
