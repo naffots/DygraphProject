@@ -14,9 +14,12 @@ function formatDate(d) {
         return yyyy + '-' + (mm < 10 ? '0' : '') + mm + (dd < 10 ? '0' : '') + dd;
 };
 
+tempFile = "temp.php";
+moistureFile = "moisture.php";
+
 g1 = new Dygraph(
   document.getElementById("graphdiv1"),
-  "temp.php", // path to CSV file
+  tempFile, // path to CSV file
   {
     delimiter: ";",
     labels: [ "Date", "Temp"],
@@ -34,7 +37,7 @@ g1 = new Dygraph(
 
 g2 = new Dygraph(
   document.getElementById("graphdiv2"),
-  "moisture.php", // path to CSV file
+  moistureFile, // path to CSV file
   {
     delimiter: ";",
     labels: [ "Date", "Humidity"],
@@ -50,3 +53,7 @@ g2 = new Dygraph(
   }
 );
 
+setInterval(function() {
+  g1.updateOptions( { 'file': tempFile } );
+  g2.updateOptions( { 'file': moistureFile } );
+}, 60000);
