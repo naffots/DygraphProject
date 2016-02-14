@@ -18,7 +18,7 @@ header('Content-Type: text/csv; charset=utf-8');
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
 
-$query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime('-1 week', time())) . "'";                                                                                          
+$query = "SELECT date,moisture FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime('-1 week', time())) . "'";                                                                                          
 $result = $db->query($query);
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
       fwrite($output, $row["date"] . ";" . $row["moisture"] . "\n");
