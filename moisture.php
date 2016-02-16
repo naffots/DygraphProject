@@ -23,5 +23,5 @@ $result = $db->query($query);
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
       fwrite($output, $row["date"] . ";" . $row["moisture"] . "\n");
 }
-fclose();
+fclose($output);
 ?>
