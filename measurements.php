@@ -15,15 +15,12 @@ $db = new MyDB();
 
 header('Content-Type: text/csv; charset=utf-8');
 
-$type = $htmlspecialchars($_GET["type"]);
-
-if (!strcmp($type, "temperature") && !strcmp($type, "moisture")) {
-  exit;
-}
+$type = $_GET["type"];
+$offset = $_GET["offset"];
 
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
-$query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime('-3 days', time())) . "'";
+$query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime($offset, time())) . "'";
 $result = $db->query($query);
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
   fwrite($output, $row["date"] . ";" . $row[$type] . "\n");

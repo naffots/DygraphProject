@@ -14,8 +14,8 @@ function formatDate(d) {
         return yyyy + '-' + (mm < 10 ? '0' : '') + mm + (dd < 10 ? '0' : '') + dd;
 };
 
-tempFile = "temp.php";
-moistureFile = "moisture.php";
+tempFile = "measurements.php?type=temperature&offset=-3%20days";
+moistureFile = "measurements.php?type=moisture&offset=-1%20week";
 
 g1 = new Dygraph(
   document.getElementById("graphdiv1"),
