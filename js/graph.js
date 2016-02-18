@@ -57,3 +57,13 @@ setInterval(function() {
   g1.updateOptions( { 'file': tempFile } );
   g2.updateOptions( { 'file': moistureFile } );
 }, 60000);
+
+// Add listeners to buttons
+$("#days").click(function() {
+  alert("I am an alert box!");
+});
+
+
+
+
+
