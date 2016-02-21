@@ -43,6 +43,7 @@ g2 = new Dygraph(
     labels: [ "Date", "Humidity"],
     xValueParser: dateToTimestamp,
     ylabel: "Volt",
+    fillGraph: true,
     axes: {
       x: {
         valueFormatter: function(ms) {
@@ -53,15 +54,42 @@ g2 = new Dygraph(
   }
 );
 
+var target_g1 = document.getElementById("graphdiv1");
+var target_g2 = document.getElementById("graphdiv2");
+var spinner_g1 = new Spinner().spin(target_g1);
+var spinner_g2 = new Spinner().spin(target_g2);
+
+
+g1.ready(function () {
+  spinner_g1.stop();
+});
+
+g2.ready(function () {
+  spinner_g2.stop();
+});
+
+
 setInterval(function() {
   g1.updateOptions( { 'file': tempFile } );
   g2.updateOptions( { 'file': moistureFile } );
 }, 60000);
 
 // Add listeners to buttons
-$("#days").click(function() {
-  alert("I am an alert box!");
-});
+document.getElementById("days").onclick = function() {
+  tempFile = "measurements.php?type=temperature&offset=-3%20days"; 
+  g1.updateOptions( { 'file': tempFile } );
+};
+
+document.getElementById("weeks").onclick = function() {
+  tempFile = "measurements.php?type=temperature&offset=-3%20weeks"; 
+  g1.updateOptions( { 'file': tempFile } );
+};
+
+document.getElementById("months").onclick = function() {
+  tempFile = "measurements.php?type=temperature&offset=-3%20months"; 
+  g1.updateOptions( { 'file': tempFile } );
+};
+
 
 
 
