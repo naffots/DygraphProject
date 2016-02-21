@@ -20,6 +20,7 @@ $offset = $_GET["offset"];
 
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
+
 $query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime($offset, time())) . "'";
 $result = $db->query($query);
 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {

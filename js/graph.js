@@ -24,6 +24,7 @@ g1 = new Dygraph(
     delimiter: ";",
     labels: [ "Date", "Temp"],
     xValueParser: dateToTimestamp,
+    color: "#FF4040",
     ylabel: "&deg;C",
     axes: {
       x: {
@@ -41,6 +42,7 @@ g2 = new Dygraph(
   {
     delimiter: ";",
     labels: [ "Date", "Humidity"],
+    color: "#4AABFF",
     xValueParser: dateToTimestamp,
     ylabel: "Volt",
     fillGraph: true,
@@ -75,19 +77,35 @@ setInterval(function() {
 }, 60000);
 
 // Add listeners to buttons
-document.getElementById("days").onclick = function() {
+document.getElementById("temp_days").onclick = function() {
   tempFile = "measurements.php?type=temperature&offset=-3%20days"; 
   g1.updateOptions( { 'file': tempFile } );
 };
 
-document.getElementById("weeks").onclick = function() {
+document.getElementById("temp_weeks").onclick = function() {
   tempFile = "measurements.php?type=temperature&offset=-3%20weeks"; 
   g1.updateOptions( { 'file': tempFile } );
 };
 
-document.getElementById("months").onclick = function() {
+document.getElementById("temp_months").onclick = function() {
   tempFile = "measurements.php?type=temperature&offset=-3%20months"; 
   g1.updateOptions( { 'file': tempFile } );
+};
+
+// Add listeners to moisture buttons
+document.getElementById("moist_days").onclick = function() {
+  moistureFile = "measurements.php?type=moisture&offset=-3%20days"; 
+  g2.updateOptions( { 'file': moistureFile } );
+};
+
+document.getElementById("moist_weeks").onclick = function() {
+  moistureFile = "measurements.php?type=moisture&offset=-3%20weeks"; 
+  g2.updateOptions( { 'file': moistureFile } );
+};
+
+document.getElementById("moist_months").onclick = function() {
+  moistureFile = "measurements.php?type=moisture&offset=-3%20months"; 
+  g2.updateOptions( { 'file': moistureFile } );
 };
 
 
