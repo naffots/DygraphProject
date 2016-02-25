@@ -11,21 +11,36 @@ class MyDB extends SQLite3
     }
 }
 
-$db = new MyDB();
-
 header('Content-Type: text/csv; charset=utf-8');
 
 $type = $_GET["type"];
 $offset = $_GET["offset"];
 
+$filename = $type . "_" . $offset . ".csv";
+
 // create a file pointer connected to the output stream
 $output = fopen('php://output', 'w');
 
-$query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime($offset, time())) . "'";
-$result = $db->query($query);
 
-while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-  fwrite($output, $row["date"] . ";" . $row[$type] . "\n");
+if (file_exist($filename) && (filemtime($filename) > (time() - 60 * 5)))
+{
+  // Our cache is fresh, return file
+  $output = file_get_contents($filename);
 }
-fclose();
+else 
+{
+  $db = new MyDB();
+
+  $query = "SELECT * FROM measurements WHERE date > '" . date("Y-m-d H:i:s", strtotime($offset, time())) . "'";
+  $result = $db->query($query);
+
+  while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    fwrite($output, $row["date"] . ";" . $row[$type] . "\n");
+  }
+  
+  // Update cached file
+  file_put_contents($filename, $output, LOCK_EX);
+}
+
+fclose($output);
 ?>
