@@ -19,6 +19,13 @@ a.anchor {
     display: block;
     position: relative;
     top: -50px;
-    visibility: show;
+    visibility: hide;
+}
+
+a.anchor2 {
+    display: block;
+    position: relative;
+    top: 150px;
+    visibility: hide;
 }
 
