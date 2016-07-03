@@ -16,6 +16,7 @@ function formatDate(d) {
 
 tempFile = "measurements.php?type=temperature&offset=-3%20days";
 moistureFile = "measurements.php?type=moisture&offset=-1%20week";
+lightFile = "measurements.php?type=light&offset=-3%20days";
 
 g1 = new Dygraph(
   document.getElementById("graphdiv1"),
@@ -26,6 +27,7 @@ g1 = new Dygraph(
     xValueParser: dateToTimestamp,
     color: "#FF4040",
     ylabel: "&deg;C",
+    fillGraph: true,
     axes: {
       x: {
         valueFormatter: function(ms) {
@@ -43,6 +45,26 @@ g2 = new Dygraph(
     delimiter: ";",
     labels: [ "Date", "Humidity"],
     color: "#4AABFF",
+    xValueParser: dateToTimestamp,
+    ylabel: "Volt",
+    fillGraph: true,
+    axes: {
+      x: {
+        valueFormatter: function(ms) {
+          return Dygraph.dateString_(ms, false);
+        }
+      }
+    }
+  }
+);
+
+g3 = new Dygraph(
+  document.getElementById("graphdiv3"),
+  lightFile, // path to CSV file
+  {
+    delimiter: ";",
+    labels: [ "Date", "Light"],
+    color: "#FFC61A",
     xValueParser: dateToTimestamp,
     ylabel: "Volt",
     fillGraph: true,
@@ -93,6 +115,7 @@ g2.ready(function () {
 setInterval(function() {
   g1.updateOptions( { 'file': tempFile } );
   g2.updateOptions( { 'file': moistureFile } );
+  g3.updateOptions( { 'file': lightFile } );
 }, 60000);
 
 // Add listeners to buttons
@@ -125,6 +148,22 @@ document.getElementById("moist_weeks").onclick = function() {
 document.getElementById("moist_months").onclick = function() {
   moistureFile = "measurements.php?type=moisture&offset=-3%20months"; 
   g2.updateOptions( { 'file': moistureFile } );
+};
+
+// Add listeners to moisture buttons
+document.getElementById("light_days").onclick = function() {
+  lightFile = "measurements.php?type=light&offset=-3%20days"; 
+  g3.updateOptions( { 'file': lightFile } );
+};
+
+document.getElementById("light_weeks").onclick = function() {
+  lightFile = "measurements.php?type=light&offset=-3%20weeks"; 
+  g3.updateOptions( { 'file': lightFile } );
+};
+
+document.getElementById("light_months").onclick = function() {
+  lightFile = "measurements.php?type=light&offset=-3%20months"; 
+  g3.updateOptions( { 'file': light } );
 };
 
 
