@@ -10,7 +10,25 @@
     <script type="text/javascript"
       src="js/dygraph-combined.js"></script>
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
+    <script type="text/javascript">
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                // Typical action to be performed when the document is ready:
+                var response = xhttp.responseText;
+                response = response.replace("Lamp status is:", "");
+                if (response == "1") {
+                    document.getElementById("lampstatus").innerHTML = "Lamp is on " + String.fromCharCode(0xD83D, 0xDCA1);
+                }
+                else
+                {
+                    document.getElementById("lampstatus").innerHTML = "Lamp is off";
+                }
+            }
+        };
+        xhttp.open("GET", "http://192.168.1.71/status", true);
+        xhttp.send(); 
+    </script>
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
   </head>
@@ -36,6 +54,15 @@
         </div><!--/.nav-collapse --> 
       </div> <!-- container -->
     </nav>
+
+    <div class="container">
+      <h2>Lamp status</h2>
+      <div class="well">
+        <div id="lampstatus">
+          No connection with lamp!
+        </div>
+      </div>
+    </div>
 
     <div class="panel panel-success">
       <div class="panel panel-heading">
