@@ -14,13 +14,13 @@ function formatDate(d) {
         return yyyy + '-' + (mm < 10 ? '0' : '') + mm + (dd < 10 ? '0' : '') + dd;
 };
 
-tempFile = "measurements.php?type=temperature&offset=-3%20days";
-moistureFile = "measurements.php?type=moisture&offset=-1%20week";
+temp1File = "measurements.php?type=in_temp&offset=-3%20days";
+temp2File = "measurements.php?type=out_temp&offset=-3%20days";
 lightFile = "measurements.php?type=light&offset=-3%20days";
 
 g1 = new Dygraph(
   document.getElementById("graphdiv1"),
-  tempFile, // path to CSV file
+  temp1File, // path to CSV file
   {
     delimiter: ";",
     labels: [ "Date", "Temp"],
@@ -40,13 +40,13 @@ g1 = new Dygraph(
 
 g2 = new Dygraph(
   document.getElementById("graphdiv2"),
-  moistureFile, // path to CSV file
+  temp2File, // path to CSV file
   {
     delimiter: ";",
-    labels: [ "Date", "Humidity"],
+    labels: [ "Date", "Temp"],
     color: "#4AABFF",
     xValueParser: dateToTimestamp,
-    ylabel: "Volt",
+    ylabel: "&deg;C",
     fillGraph: true,
     axes: {
       x: {
@@ -66,7 +66,7 @@ g3 = new Dygraph(
     labels: [ "Date", "Light"],
     color: "#FFC61A",
     xValueParser: dateToTimestamp,
-    ylabel: "Volt",
+    ylabel: "milli volt",
     fillGraph: true,
     axes: {
       x: {
@@ -113,41 +113,41 @@ g2.ready(function () {
 
 
 setInterval(function() {
-  g1.updateOptions( { 'file': tempFile } );
-  g2.updateOptions( { 'file': moistureFile } );
+  g1.updateOptions( { 'file': temp1File } );
+  g2.updateOptions( { 'file': temp2File } );
   g3.updateOptions( { 'file': lightFile } );
 }, 60000);
 
 // Add listeners to buttons
 document.getElementById("temp_days").onclick = function() {
-  tempFile = "measurements.php?type=temperature&offset=-3%20days"; 
-  g1.updateOptions( { 'file': tempFile } );
+  temp1File = "measurements.php?type=in_temp&offset=-3%20days"; 
+  g1.updateOptions( { 'file': temp1File } );
 };
 
 document.getElementById("temp_weeks").onclick = function() {
-  tempFile = "measurements.php?type=temperature&offset=-3%20weeks"; 
-  g1.updateOptions( { 'file': tempFile } );
+  temp1File = "measurements.php?type=in_temp&offset=-3%20weeks"; 
+  g1.updateOptions( { 'file': temp1File } );
 };
 
 document.getElementById("temp_months").onclick = function() {
-  tempFile = "measurements.php?type=temperature&offset=-3%20months"; 
-  g1.updateOptions( { 'file': tempFile } );
+  temp1File = "measurements.php?type=in_temp&offset=-3%20months"; 
+  g1.updateOptions( { 'file': temp1File } );
 };
 
-// Add listeners to moisture buttons
+// Add listeners to out_temp buttons
 document.getElementById("moist_days").onclick = function() {
-  moistureFile = "measurements.php?type=moisture&offset=-3%20days"; 
-  g2.updateOptions( { 'file': moistureFile } );
+  temp2File = "measurements.php?type=out_temp&offset=-3%20days"; 
+  g2.updateOptions( { 'file': temp2File } );
 };
 
 document.getElementById("moist_weeks").onclick = function() {
-  moistureFile = "measurements.php?type=moisture&offset=-3%20weeks"; 
-  g2.updateOptions( { 'file': moistureFile } );
+  temp2File = "measurements.php?type=out_temp&offset=-3%20weeks"; 
+  g2.updateOptions( { 'file': temp2File } );
 };
 
 document.getElementById("moist_months").onclick = function() {
-  moistureFile = "measurements.php?type=moisture&offset=-3%20months"; 
-  g2.updateOptions( { 'file': moistureFile } );
+  temp2File = "measurements.php?type=out_temp&offset=-3%20months"; 
+  g2.updateOptions( { 'file': temp2File } );
 };
 
 // Add listeners to moisture buttons
@@ -163,7 +163,7 @@ document.getElementById("light_weeks").onclick = function() {
 
 document.getElementById("light_months").onclick = function() {
   lightFile = "measurements.php?type=light&offset=-3%20months"; 
-  g3.updateOptions( { 'file': light } );
+  g3.updateOptions( { 'file': lightFile } );
 };
 
 
